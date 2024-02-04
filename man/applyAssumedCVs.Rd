@@ -4,7 +4,7 @@
 \alias{applyAssumedCVs}
 \title{apply assumed CVs to catch dataframe}
 \usage{
-applyAssumedCVs(dfr, dfrCVs)
+applyAssumedCVs(dfr, dfrCVs, sclF = 1)
 }
 \arguments{
 \item{dfr}{\itemize{
@@ -27,6 +27,7 @@ with values in \code{dfrCVs}. \code{dfrCVs} has columns
 \itemize{
 \item{cv - default value for cv}
 \item{minErr - minimum standard deviation allowed}
+\item{sclF - multiplicative scale factor to convert minErr to value units}
 \item{year - (optional) corresponding year}
 \item{type - (optional) corresponding value type (ABUNDANCE or BIOMASS)}
 }

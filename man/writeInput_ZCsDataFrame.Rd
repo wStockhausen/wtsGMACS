@@ -2,7 +2,7 @@
 % Please edit documentation in R/writeInput_ZCsDataFrame.R
 \name{writeInput_ZCsDataFrame}
 \alias{writeInput_ZCsDataFrame}
-\title{Write size comps dataframe to a connection in GMACS input format}
+\title{Write size comps dataframe to a connection in GMACS alternative 1 input format}
 \usage{
 writeInput_ZCsDataFrame(
   conn = stdout(),
@@ -10,7 +10,9 @@ writeInput_ZCsDataFrame(
   fleet_name,
   fleet_names = NULL,
   gear = c("all", "fixed", "trawl", "pot"),
-  sex = c("MALE", "FEMALE", "ALL"),
+  sex = c("male", "female", "undetermined"),
+  maturity = c("immature", "mature", "undetermined"),
+  shell = c("new shell", "old shell", "undetermined"),
   catchType = c("RETAINED", "DISCARD", "TOTAL"),
   unitsIn = c("ONES", "MILLIONS"),
   unitsOut = "MILLIONS"
@@ -37,7 +39,7 @@ writeInput_ZCsDataFrame(
 Invisibly returns the connection \code{con} to allow piping.
 }
 \description{
-Function to write a size comps dataframe to a connection in GMACS input format.
+Function to write a size comps dataframe to a connection in GMACS alternative 1 input format.
 }
 \details{
 The input dataframe should have the following column names

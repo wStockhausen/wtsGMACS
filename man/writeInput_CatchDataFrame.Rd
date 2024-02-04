@@ -2,14 +2,17 @@
 % Please edit documentation in R/writeInput_CatchDataFrame.R
 \name{writeInput_CatchDataFrame}
 \alias{writeInput_CatchDataFrame}
-\title{Write fishery catch dataframe to a connection in GMACS input format}
+\title{Write fishery catch dataframe to a connection in GMACS alternative 1 input format}
 \usage{
 writeInput_CatchDataFrame(
   conn = stdout(),
   dfr = NULL,
   fleet_name,
   fleet_names = NULL,
-  sex = c("MALE", "FEMALE", "ALL"),
+  gear = c("all", "fixed", "trawl", "crab pot"),
+  sex = c("male", "female", "undetermined"),
+  maturity = c("immature", "mature", "undetermined"),
+  shell = c("new shell", "old shell", "undetermined"),
   catchType = c("RETAINED", "DISCARD", "TOTAL"),
   discard_mortality = 0,
   unitsType = c("ABUNDANCE", "BIOMASS"),
@@ -44,7 +47,7 @@ writeInput_CatchDataFrame(
 Invisibly returns the connection \code{con} to allow piping.
 }
 \description{
-Function to write a catch dataframe to a connection in GMACS input format.
+Function to write a catch dataframe to a connection in GMACS alternative 1 input format.
 }
 \details{
 The input dataframe should have the following column names
