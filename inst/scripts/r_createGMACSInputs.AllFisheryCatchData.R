@@ -79,7 +79,7 @@ dfrTC = lstCF$dfrTC_ABs_FAYXMS |>
           tidyr::pivot_longer(cols=c("abundance","biomass"),names_to="type",values_to="value") |> 
           dplyr::select(catchType,type,fleet,gear,year,season,x,m,s,value) |> 
           dplyr::group_by(catchType,type,fleet,gear,year,season,x) |> 
-          dplyr::summarise(value=wtsUtilities::Sum(value)) |> 
+          dplyr::summarise(value=wtsUtilities::Sum(value)/MILLION) |> 
           dplyr::ungroup() |> 
           dplyr::mutate(m="undetermined",s="undetermined");
 #------assumed cvs
