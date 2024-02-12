@@ -1,9 +1,8 @@
-#--write groundfish fisheries catch data in GMACS dat file format 
-#----by gear type and aggregated across gear types
+#--write all fisheries catch data to new GMACS dat file format 
+#----by fishery/fleet, gear type and aggregated across gear types for a given fishery
 options(stringsAsFactors=FALSE);
 require(tcsamFisheryDataAKFIN);
 require(tcsamFunctions);
-require(wtsSizeComps);
 require(wtsUtilities);
 source("R/getConstants.R")
 source("R/writeInput_CatchDataFrame.R")

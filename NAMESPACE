@@ -3,4 +3,5 @@
 export(applyAssumedCVs)
 export(getConstants)
 export(writeInput_CatchDataFrame)
+export(writeInput_RelativeAbundanceDataFrame)
 export(writeInput_ZCsDataFrame)
