@@ -6,6 +6,7 @@
 \usage{
 compareFitsZCs(
   dfr,
+  ncols = NULL,
   subtitle = "",
   xlab = "size (mm CW)",
   ylab = "proportion",
@@ -24,6 +25,10 @@ compareFitsZCs(
 \arguments{
 \item{dfr}{\itemize{
 \item dataframe with observed/predicted size comps from Gmacs rep1 file(s)
+}}
+
+\item{ncols}{\itemize{
+\item number of panel columns for figure
 }}
 
 \item{subtitle}{\itemize{
