@@ -55,12 +55,12 @@ runJitter<-function(path2out=".",
     stm<-Sys.time();
 
     #set up output
-    out.csv<-file.path(path2out,out.csv)
+    out.csv<-file.path(path2out,out.csv);
 
     #--set up run commands----
     cmdLst = getDefaultRunCmds();
-    cmdLst$path2exe = path2exe;
-    cmdLst$path2dat = path2dat;
+    cmdLst$path2exe = normalizePath(path2exe);#--written to batch file/shell script
+    cmdLst$path2dat = normalizePath(path2dat);#--written to batch file/shell script
     cmdLst$minPhase = minPhase;
     cmdLst$jitter   = TRUE;
     cmdLst$iseed    = 0;  #-use the system time as seed 
@@ -73,7 +73,7 @@ runJitter<-function(path2out=".",
         for (r in 1:numRuns){
             cat("\n\n---running GMACS program for",r,"out of",numRuns,"---\n\n");
             fldr<-paste('run',wtsUtilities::formatZeros(r,width=max(2,ceiling(log10(numRuns)))),sep='');
-            p2f<-file.path(path2out,fldr);
+            p2f<-normalizePath(file.path(path2out,fldr));#--normalization shouldn't hurt
             par<-runGMACS(runpath=p2f,
                           runCmds=cmdLst,
                           test=test);
@@ -113,7 +113,7 @@ runJitter<-function(path2out=".",
         #re-run case associated with minimum objective function value, save in "best"
         cat("\n\n---Re-running ADMB program for",idx[1],"out of",numRuns,"as best run---\n");
         best<-"best";
-        p2f<-file.path(path2out,best);
+        p2f<-normalizePath(file.path(path2out,best));
         cat("---Output folder is '",p2f,"'\n\n",sep='');
         if (!dir.exists(p2f)) dir.create(p2f);
         if (file.exists(file.path(fldr,"gmacs.par"))){
