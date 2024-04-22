@@ -2,13 +2,13 @@
 % Please edit documentation in R/extractRep1Results.R
 \name{extractRep1Results}
 \alias{extractRep1Results}
-\title{Extract an object from a \code{rep1} list object.}
+\title{Extract an object from \code{gmacs_rep1} objects.}
 \usage{
-extractRep1Results(lst, objname)
+extractRep1Results(obj, objname)
 }
 \arguments{
-\item{lst}{\itemize{
-\item named list of rep1 objects
+\item{obj}{\itemize{
+\item a gmacs_reslst, gmacs_repslst, or gmacs_rep1 object
 }}
 
 \item{objname}{\itemize{
@@ -16,10 +16,15 @@ extractRep1Results(lst, objname)
 }}
 }
 \value{
-If the object to extract is a dataframe, the returned is a dataframe
+If the object to extract is a dataframe, then the returned is a dataframe
 with an appended column 'case' indicating the
 originating model case. Otherwise a list of extracted objects named by case.
 }
 \description{
-Function to extract an object from a \code{rep1} list object.
+Function to extract an object from \code{gmacs_rep1} objects.
+}
+\details{
+If the object to extract is a dataframe, then the returned is a dataframe
+with an appended column 'case' indicating the
+originating model case. Otherwise a list of extracted objects named by case.
 }

@@ -52,6 +52,6 @@ readGmacsRep1<-function(fn,verbose=FALSE){
       if (verbose) cat(ln,"\n")
     }
   }#--while (iln<nls)
-  class(out) <- c("rep1",class(out));
+  class(out) <- c("gmacs_rep1",class(out));
   return(out);
 }
