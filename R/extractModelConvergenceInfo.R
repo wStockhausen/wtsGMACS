@@ -5,10 +5,16 @@
 #' @param obj - the object to extract the info from 
 #' @return dataframe 
 #' @details The returned dataframe has convergence info by model 'case'.
-#' @export
+#' @export 
+#' 
 extractModelConvergenceInfo<-function(obj){
   if (inherits(obj,"gmacs_reslst")){
-    dfr = extractModelConvergenceInfo(obj$dfrPars);
+    stds = obj$dfrStds |> 
+             dplyr::distinct(case) |> 
+             dplyr::mutate(`std errors?`="yes");
+    dfr = extractModelConvergenceInfo(obj$dfrPars) |> 
+            dplyr::left_join(stds,by="case") |> 
+            dplyr::mutate(`std errors?`=ifelse(is.na(`std errors?`),"no","yes"));
   } else if (inherits(obj,"gmacs_par")){
     names = c("number of parameters","objective function","max gradient");
     dfr = obj |> 
