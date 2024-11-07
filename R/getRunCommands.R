@@ -18,7 +18,7 @@
 #'@param iseed - value for random number seed (or 0 to use start time)
 #'@param fullClean - flag to clean up almost all files (use when making multiple jitter runs)
 #'@param cleanup - flag (T/F) to clean up unnecessary files
-#'@param verbose - flag (T/F) to print diagnostic info
+#'@param verbose - flag (T/F) to print diagnostic info for this function
 #' 
 #'@returns string for shell script or batch file to run gmacs model.
 #' 

@@ -85,7 +85,7 @@ getRunCommands(
 }}
 
 \item{verbose}{\itemize{
-\item flag (T/F) to print diagnostic info
+\item flag (T/F) to print diagnostic info for this function
 }}
 }
 \value{

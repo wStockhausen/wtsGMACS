@@ -19,7 +19,7 @@ runGMACS(
 }}
 
 \item{runCmds}{\itemize{
-\item list of inputs to \code{\link[=runCommands]{runCommands()}}
+\item list of inputs to \code{\link[=getRunCommands]{getRunCommands()}}
 }}
 }
 \value{

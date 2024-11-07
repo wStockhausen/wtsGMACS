@@ -2,7 +2,7 @@
 #' @title Run a GMACS model 
 #' @description Function to run a GMACS model. 
 #' @param runpath - path to folder in which to run model
-#' @param runCmds - list of inputs to [runCommands()]
+#' @param runCmds - list of inputs to [getRunCommands()]
 #' @returns NULL (if `test`==TRUE), or a `gmacspar`-class dataframe.
 #' 
 #' @details If `test == FALSE` and the model successfully converges, the returned 
@@ -38,13 +38,15 @@ runGMACS<-function(runpath='.',
   #--start timing----
   stm<-Sys.time();
 
-  plat<-Sys.info()[['sysname']];
-  if (tolower(plat)=='darwin'){
-      os="osx";
-  } else if (tolower(plat)=='windows') {
-      os="win";
-  } else if (tolower(plat)=='linux') {
-      os="osx";
+  if (is.null(runCmds$os)){
+    plat<-Sys.info()[['sysname']];
+    if (tolower(plat)=='darwin'){
+        runCmds$os="osx";
+    } else if (tolower(plat)=='windows') {
+        runCmds$os="win";
+    } else if (tolower(plat)=='linux') {
+        runCmds$os="osx";
+    }
   }
     
   #-switch to run folder (create if necessary)----
@@ -82,9 +84,9 @@ runGMACS<-function(runpath='.',
   dfr<-NULL;
   if (!test) dfr<-readParFile("gmacs.par");
 
-  #get jitter info
+  #get jitter info, if doing jittering
   if (!test){
-      if (runCmds$jitter&(!is.null(dfr))) {
+      if (!is.null(runCmds$jitter)&&(runCmds$jitter)&&(!is.null(dfr))) {
         seed = as.numeric(readLines("jitter.txt"));
         dfr = dplyr::bind_rows(tibble::tibble(name="jitter_seed",value=seed),
                                dfr);
