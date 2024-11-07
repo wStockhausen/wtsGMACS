@@ -60,7 +60,7 @@ runGMACS<-function(runpath='.',
   run.cmds<-do.call(getRunCommands,runCmds);
   
   #--run gmacs----
-  if (tolower(os)=='win'){
+  if (tolower(runCmds$os)=='win'){
       cat(run.cmds,file="tmp.bat")
       Sys.chmod("tmp.bat",mode='7777')
       if (!test) system("tmp.bat",wait=TRUE);
