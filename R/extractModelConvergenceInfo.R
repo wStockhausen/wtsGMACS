@@ -9,12 +9,17 @@
 #' 
 extractModelConvergenceInfo<-function(obj){
   if (inherits(obj,"gmacs_reslst")){
-    stds = obj$dfrStds |> 
-             dplyr::distinct(case) |> 
-             dplyr::mutate(`std errors?`="yes");
-    dfr = extractModelConvergenceInfo(obj$dfrPars) |> 
-            dplyr::left_join(stds,by="case") |> 
-            dplyr::mutate(`std errors?`=ifelse(is.na(`std errors?`),"no","yes"));
+    if (nrow(obj$dfrStds)>0){
+      stds = obj$dfrStds |> 
+               dplyr::distinct(case) |> 
+               dplyr::mutate(`std errors?`="yes");
+      dfr = extractModelConvergenceInfo(obj$dfrPars) |> 
+              dplyr::left_join(stds,by="case") |> 
+              dplyr::mutate(`std errors?`=ifelse(is.na(`std errors?`),"no","yes"));
+    } else {
+      dfr = extractModelConvergenceInfo(obj$dfrPars) |> 
+              dplyr::mutate(`std errors?`="no");
+    }
   } else if (inherits(obj,"gmacs_par")){
     names = c("number of parameters","objective function","max gradient");
     dfr = obj |> 
