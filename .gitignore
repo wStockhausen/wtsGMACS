@@ -4,7 +4,7 @@
 .Ruserdata
 docs
 .DS_Store
-*.txt
+GMACS*.txt
 
 /.quarto/
 /_site/

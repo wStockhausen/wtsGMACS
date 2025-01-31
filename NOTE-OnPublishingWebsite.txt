@@ -1,0 +1,10 @@
+#--NOTE on publishing README, website
+See: https://quarto.org/docs/publishing/github-pages.html
+* look at the following sections, in partricular:
+    * "Publish command/Source branch"
+    * "Publish command/Ignoring output"
+    * "Githb Action"
+      * the yml for the Action is in .github/workflows/quarto-publish.yml
+* Edit README.qmd and render it to create README.md
+* Add qmd files to be rendered for website by editing _quarto.yml
+
