@@ -2,7 +2,7 @@ project:
   type: website
   output-dir: _site
   render:
-  - README.qmd
+  - website/README_website.qmd
     # - website/01_Intro.qmd
     # - website/02_PopDyMod.qmd
     # - website/03_ModelDimensions.qmd
@@ -42,7 +42,7 @@ website:
     search: true
     collapse-level: 1
     contents:
-      - href: README.qmd
+      - href: website/README_website.qmd
         text: Introduction
       # - href: website/01_Intro.qmd
       #   text: Introduction
