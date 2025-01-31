@@ -7,3 +7,4 @@ docs
 *.txt
 
 /.quarto/
+/_site/
