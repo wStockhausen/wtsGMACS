@@ -30,7 +30,7 @@ Function to run a GMACS model.
 }
 \details{
 If \code{test == FALSE} and the model successfully converges, the returned
-value is a dataframe of class \code{gmacspar} from \link{readParFile}. In addition, if
+value is a dataframe of class \code{gmacspar} from \code{\link[=readParFile]{readParFile()}}. In addition, if
 jittering was done, the random number generator seed is prepended as the first
 row.
 }

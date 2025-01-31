@@ -6,7 +6,7 @@
 #' @returns NULL (if `test`==TRUE), or a `gmacspar`-class dataframe.
 #' 
 #' @details If `test == FALSE` and the model successfully converges, the returned 
-#' value is a dataframe of class `gmacspar` from [readParFile]. In addition, if 
+#' value is a dataframe of class `gmacspar` from [readParFile()]. In addition, if 
 #' jittering was done, the random number generator seed is prepended as the first 
 #' row.
 #' 

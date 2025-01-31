@@ -15,12 +15,13 @@ Function to read a set of gmacs model results from a (possibly several) model ru
 \details{
 A \code{gmacs_reslst} object is a list with elements
 \itemize{
-\item{dfrPars - \code{gmacs_par} dataframe object with parameter and convergence info from the par file(s), idenitified by \code{case}}
-\item{dfrStds - \code{gmacs_std} dataframe object, with parameter and sd-variable estimates and uncertainty info from the std file(s), idenitified by \code{case}}
-\item{dfrAllStds - \code{gmacs_allstd} dataframe object with parameter and sd-variable estimates and uncertainty info from the Gmacsall.std file(s), identified by case}
-\item{repsLst - \code{gmacs_repslst} object, identified by \code{case}}
+\item{dfrPars - a \code{gmacs_par} dataframe object with parameter and convergence info from the par file(s), idenitified by \code{case}}
+\item{dfrStds - a \code{gmacs_std} dataframe object, with parameter and sd-variable estimates and uncertainty info from the std file(s), idenitified by \code{case}}
+\item{dfrAllStds - a \code{gmacs_allstd} dataframe object with parameter and sd-variable estimates and uncertainty info from the Gmacsall.std file(s), identified by case}
+\item{repsLst - a \code{gmacs_repslst} object, identified by \code{case}: a list of gmacs_rep1 objects (see \code{\link[=readGmacsRep1]{readGmacsRep1()}})}
+\item{outsLst - a \code{gmacs_outslst} object, identified by \code{case}: a list of gmacs_allout objects (see \code{\link[=readGmacsAllout]{readGmacsAllout()}})}
 }
 If \code{fldrs} is a named vector, then the returned
-elements of repLsts are correspondingly named. If not, the folder names are used. For
+elements of \code{repLsts} are correspondingly named. If not, the folder names are used. For
 the returned dataframes, the \code{case} column contains the relevant name.
 }
