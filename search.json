@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "website/README_website.html",
+    "href": "website/README_website.html",
+    "title": "README",
+    "section": "",
+    "text": "wtsGMACS is an R package to deal with GMACS assessment data and results.\n\n\nAfter installing the required packages (see below), this package can be installed using:\ndevtools::install_github(\"wStockhausen/wtsGMACS\")\n\n\nThis R package requires the following R packages be installed (links are to repositories):\n\ntcsamFunctions [https://github.com/wStockhausen/tcsamFunctions]\nwtsPlots [https://github.com/wStockhausen/wtsPlots]\nwtsUtilities [https://github.com/wStockhausen/wtsUtilities]\n\nThe packages above can be installed using\ndevtools::install_github(\"wStockhausen/pkg_name\")\nwhere pkg_name is the name of the package above. To avoid error messages when installing the packages, install them in the reverse order listed above.\nOther required packages available on CRAN include:\n\ndplyr\nggplot2\ngraphics\nmagrittr\nRColorBrewer\nreadr\nreshape2\nstats\ntibble\ntidyr\n\n\n\n\n\nThe runGMACS function can be used to run a GMACS model, as in:\nwtsGMACS::runGMACS(runpath=path_to_run_folder,\n                   runCmds= list(path2exe=path_to_exe,\n                                 path2dat=path_to_gmacs_dat_file);\nIn the above, path_to_run_folder is a path (absolute or relative to the R working directory) to the folder in which you want the model to run, path_to_exe is a path to the gmacs executable, and path_to_gmacs_dat_file is a path to the gmacs.dat file describing the model run,\nUse ?wtsGMACS::runGMACS for more information.\nThe runJitter function can be used to evaluate a series of model runs under parameter jittering. Use ?wtsGMACS::runJitter for more information.\nThe readModelResults function can be used to read results from the par, std, Gmacsall.std, and gmacs.rep1 files for multiple model runs:\nfldrs_ = c(A=path_to_ModelResultsA,\n           B=path_to_ModelResultsB);\nMs = wtsGMACS::readModelResults(fldrs_);\nwhere fldrs_ is a named character vector (the names will be used as model names in the results list) and the path_’s are paths to the model run folders of interest. Ms will be a gmacs_reslst object (a list with of class “gmacs_reslst”) that encompasses results from all the models of interest.\nUse ?wtsGMACS::readModelResults for more information.\n\n\n\n\nThis repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.\nSoftware code created by U.S. Government employees is not subject to copyright in the United States (17 U.S.C. §105). The United States/Department of Commerce reserve all rights to seek and obtain copyright protection in countries other than the United States for Software authored in its entirety by the Department of Commerce. To this end, the Department of Commerce hereby grants to Recipient a royalty-free, nonexclusive license to use, copy, and create derivative works of the Software outside of the United States.\n\n\nU.S. Department of Commerce | National Oceanographic and Atmospheric Administration | NOAA Fisheries\n\n\n\n\n\npages-build-deployment",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "website/README_website.html#installation",
+    "href": "website/README_website.html#installation",
+    "title": "README",
+    "section": "",
+    "text": "After installing the required packages (see below), this package can be installed using:\ndevtools::install_github(\"wStockhausen/wtsGMACS\")\n\n\nThis R package requires the following R packages be installed (links are to repositories):\n\ntcsamFunctions [https://github.com/wStockhausen/tcsamFunctions]\nwtsPlots [https://github.com/wStockhausen/wtsPlots]\nwtsUtilities [https://github.com/wStockhausen/wtsUtilities]\n\nThe packages above can be installed using\ndevtools::install_github(\"wStockhausen/pkg_name\")\nwhere pkg_name is the name of the package above. To avoid error messages when installing the packages, install them in the reverse order listed above.\nOther required packages available on CRAN include:\n\ndplyr\nggplot2\ngraphics\nmagrittr\nRColorBrewer\nreadr\nreshape2\nstats\ntibble\ntidyr",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "website/README_website.html#how-to-use",
+    "href": "website/README_website.html#how-to-use",
+    "title": "README",
+    "section": "",
+    "text": "The runGMACS function can be used to run a GMACS model, as in:\nwtsGMACS::runGMACS(runpath=path_to_run_folder,\n                   runCmds= list(path2exe=path_to_exe,\n                                 path2dat=path_to_gmacs_dat_file);\nIn the above, path_to_run_folder is a path (absolute or relative to the R working directory) to the folder in which you want the model to run, path_to_exe is a path to the gmacs executable, and path_to_gmacs_dat_file is a path to the gmacs.dat file describing the model run,\nUse ?wtsGMACS::runGMACS for more information.\nThe runJitter function can be used to evaluate a series of model runs under parameter jittering. Use ?wtsGMACS::runJitter for more information.\nThe readModelResults function can be used to read results from the par, std, Gmacsall.std, and gmacs.rep1 files for multiple model runs:\nfldrs_ = c(A=path_to_ModelResultsA,\n           B=path_to_ModelResultsB);\nMs = wtsGMACS::readModelResults(fldrs_);\nwhere fldrs_ is a named character vector (the names will be used as model names in the results list) and the path_’s are paths to the model run folders of interest. Ms will be a gmacs_reslst object (a list with of class “gmacs_reslst”) that encompasses results from all the models of interest.\nUse ?wtsGMACS::readModelResults for more information.",
+    "crumbs": [
+      "Introduction"
+    ]
+  },
+  {
+    "objectID": "website/README_website.html#noaa-disclaimer",
+    "href": "website/README_website.html#noaa-disclaimer",
+    "title": "README",
+    "section": "",
+    "text": "This repository is a scientific product and is not official communication of the National Oceanic and Atmospheric Administration, or the United States Department of Commerce. All NOAA GitHub project code is provided on an ‘as is’ basis and the user assumes responsibility for its use. Any claims against the Department of Commerce or Department of Commerce bureaus stemming from the use of this GitHub project will be governed by all applicable Federal law. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by the Department of Commerce. The Department of Commerce seal and logo, or the seal and logo of a DOC bureau, shall not be used in any manner to imply endorsement of any commercial product or activity by DOC or the United States Government.\nSoftware code created by U.S. Government employees is not subject to copyright in the United States (17 U.S.C. §105). The United States/Department of Commerce reserve all rights to seek and obtain copyright protection in countries other than the United States for Software authored in its entirety by the Department of Commerce. To this end, the Department of Commerce hereby grants to Recipient a royalty-free, nonexclusive license to use, copy, and create derivative works of the Software outside of the United States.\n\n\nU.S. Department of Commerce | National Oceanographic and Atmospheric Administration | NOAA Fisheries\n\n\n\n\n\npages-build-deployment",
+    "crumbs": [
+      "Introduction"
+    ]
+  }
+]
