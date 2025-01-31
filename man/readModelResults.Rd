@@ -4,7 +4,16 @@
 \alias{readModelResults}
 \title{Read gmacs results files from a (possibly several) results folder(s)}
 \usage{
-readModelResults(fldrs)
+readModelResults(fldrs, verbose = FALSE)
+}
+\arguments{
+\item{fldrs}{\itemize{
+\item a vector of folder names, each with the results from a single model run
+}}
+
+\item{verbose}{\itemize{
+\item flag (T/F) to print diagnostic info
+}}
 }
 \value{
 a \code{gmacs_reslst} object: a named list (see \link{@details})

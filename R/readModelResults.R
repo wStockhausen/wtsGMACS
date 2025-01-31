@@ -1,6 +1,8 @@
 #' 
 #' @title Read gmacs results files from a (possibly several) results folder(s)
 #' @description Function to read a set of gmacs model results from a (possibly several) model run folder(s).
+#' @param fldrs - a vector of folder names, each with the results from a single model run
+#' @param verbose - flag (T/F) to print diagnostic info
 #' @returns a `gmacs_reslst` object: a named list (see [@details])
 #' @details A `gmacs_reslst` object is a list with elements
 #' \itemize{
@@ -16,7 +18,7 @@
 #' 
 #' @export
 #' 
-readModelResults<-function(fldrs){
+readModelResults<-function(fldrs,verbose=FALSE){
   ##--read gmacs.par files----
   message("Reading par files")
   parfns = file.path(fldrs,"gmacs.par");
@@ -69,8 +71,9 @@ readModelResults<-function(fldrs){
   
   lst = list(dfrPars=dfrPars,
              dfrStds=dfrStds,
+             dfrAllStds=dfrAllStds,
              repsLst=repsLst,
-             dfrAllStds=dfrAllStds);
+             outsLst=outsLst);
   class(lst) = c("gmacs_reslst",class(lst));
   return(lst);
 }

@@ -1,7 +1,6 @@
 #' 
 #' @title Read a Gmacs gmacs.rep1 file
-#' @description
-#' Read a Gmacs .rep1 file and return a list of report objects.
+#' @description Read a Gmacs .rep1 file and return a list of report objects.
 #' @param fn - path to gmacs.rep1 file 
 #' @param verbose - flag to print diagnostic info 
 #' @return a named list of class `gmacs_rep1` 

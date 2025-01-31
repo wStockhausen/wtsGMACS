@@ -1,7 +1,6 @@
 #' 
 #' @title Read a Gmacsall.out file
-#' @description
-#' Read a Gmacsall.out file and return a list of report objects.
+#' @description Read a Gmacsall.out file and return a list of report objects.
 #' @param fn - path to the Gmacsall.out file 
 #' @param verbose - flag to print diagnostic info 
 #' @return a named list of class `gmacs_allout` 

@@ -1,6 +1,46 @@
+---
+title: "README"
+crossref: 
+  fig-title: Figure
+  tbl-title: Table
+format: 
+#--github-flavored markdown  
+#  gfm: 
+  md:
+    html-math-method: mathjax
+    comment: "#>"
+    collapse: true
+    toc: true
+tbl-cap-location: top
+fig-cap-location: bottom
+# prefer-html: true
+# keep-yaml: true
+# keep-md: true
+---
+
+<!--DO NOT VIEW THIS FILE USING THE VISUAL EDITOR!! (seems to screw things up)-->
+<!-- README.md is generated from README.qmd. Please edit README.qmd, then render README.md using `quarto render README.qmd` in a terminal window. -->
+<!-- use `quarto render README.qmd` in the terminal window to build README.md prior to committing to keep README.md up-to-date-->
+<!-- don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.-->
+
+```{r, include = FALSE}
+  knitr::opts_chunk$set(
+    fig.path = "man/figures/README-",
+    out.width = "100%"
+  )
+```
+
+```{r links, include=FALSE}
+  hl_ADMB  = "http://www.admb-project.org";
+  hl_GMACS = "https://github.com/GMACS-project";
+  hl_GMACS_Code1 = "https://github.com/GMACS-project/GMACS_Assessment_code";
+  hl_GMACS_Code2 = "https://github.com/GMACS-project/GMACS_tpl-cpp_code.git";
+  hl_R     = "https://www.r-project.org/";
+```
+
 # wtsGMACS
 
-This is an R package to deal with GMACS assessment data and results.
+`wtsGMACS` is an R package to deal with GMACS assessment data and results.
 
 ## Installation
 
@@ -86,3 +126,10 @@ Software code created by U.S. Government employees is not subject to copyright i
 <img src="https://raw.githubusercontent.com/nmfs-general-modeling-tools/nmfspalette/main/man/figures/noaa-fisheries-rgb-2line-horizontal-small.png" height="75" alt="NOAA Fisheries">
 
 [U.S. Department of Commerce](https://www.commerce.gov/) | [National Oceanographic and Atmospheric Administration](https://www.noaa.gov) | [NOAA Fisheries](https://www.fisheries.noaa.gov/)
+
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+[![pages-build-deployment](https://github.com/wStockhausen/rtmbGMACS/actions/workflows/pages/pages-build-deployment/badge.svg?branch=gh-pages)](https://github.com/wStockhausen/rtmbGMACS/actions/workflows/pages/pages-build-deployment)
+
