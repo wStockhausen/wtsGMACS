@@ -8,6 +8,8 @@
 #' @import dplyr
 #' @import rCompTCMs
 #' @import tidyr
+#' 
+#' @export
 #'
 extractSelFcns<-function(resGMACS,resTCSAM02=NULL){
   rep = resGMACS[[1]]$rep;

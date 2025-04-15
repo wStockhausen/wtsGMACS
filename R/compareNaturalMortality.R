@@ -1,14 +1,16 @@
 #'
-#' @title Create a [ggplot2] object to compare tcsam02 and gmacs selectivity/retention functions
+#' @title Create a [ggplot2] object to compare tcsam02 and gmacs natural mortality rates
 #' @description Function to create a [ggplot2] object to compare tcsam02 and gmacs
 #' selectivity/retention functions. Can also be used to plot either model type.
 #' @param dfr - dataframe to plot
 #' @param ylab - y-axis label
-#' @param sub - subtitle to label plot
+#' @param plotZ - flag to plot size-specific mortality rates (not implemented yet)
 #' @return [ggplot2] plot object
 #'
 #' @details The input dataframe should at least have columns named "case" (model case), "y" (year),
-#' "z" (size), and "val" (value). Curves are colored by `case`.
+#' "z" (size), and "val" (value). Bars/curves are colored by `case`.
+#' 
+#' The gmacs `case` should start with "gmacs".
 #'
 #' @import dplyr
 #' @import ggplot2
@@ -20,31 +22,27 @@
 #'
 #' @export
 #'
-compareSelFcns<-function(dfr,ylab="Selectivity",sub=""){
-  plotSels<-function(dfr,ylab="Selectivity",sub=""){
-    ggplot(dfr,aes(x=z,y=val,colour=case)) +
-      geom_line() +
-      facet_wrap(~ylabs) +
-      scale_y_continuous(limits=c(0,NA)) +
-      labs(x="size (mm CW)",y=ylab,subtitle=sub) +
-      wtsPlots::getStdTheme();
-  }
-  cols = names(dfr)[names(dfr) %in% c("case","fleet","y","x","m","s","z","val")];
+compareNaturalMortality<-function(dfr,ylab="M",plotZ=FALSE){
+  ##--drop unnecessary columns----
+  cols = names(dfr)[names(dfr) %in% c("case","y","x","m","s","z","val")];
   ncls = length(cols);
   tmp0 = dfr |> dplyr::select(tidyselect::all_of(cols));
+  ##--collect values and create labels
   tmp1 = wtsUtilities::collectValuesByGroup(tmp0,collect="y",names_from="z",values_from="val");
   tmp1 = tmp1 |> dplyr::rowwise() |>
                  dplyr::mutate(ylab=wtsUtilities::collapseIntegersToString(y),.before=y) |>
                  dplyr::ungroup();
+  ##--cross cases----
   tmp2  = tmp1 |> dplyr::select(tidyselect::any_of(1:ncls));
   tmp2a = tmp2 |> dplyr::cross_join(tmp2);
   tmp3  = tmp2a |> dplyr::filter(!(case.x==case.y));
   if (nrow(tmp3)>0){
+    ##--select unique case combinations out of duplicates and self-crosses
     tmp4 = tmp3 |> dplyr::mutate(check=(any(unlist(y.y) %in% unlist(y.x))),
                                  grp2=paste(group.x,group.y),
                                  ylabs=paste0(ylab.x,"\n",ylab.y),
                                  .before=1) |>
-                   dplyr::filter(check,case.x=="gmacs") |>
+                   dplyr::filter(check,stringr::str_starts(case.x,"gmacs")) |>
                    dplyr::select(!check);
     xcols = names(tmp4)[stringr::str_ends(names(tmp4),".x")]
     ycols = names(tmp4)[stringr::str_ends(names(tmp4),".y")]
@@ -59,31 +57,41 @@ compareSelFcns<-function(dfr,ylab="Selectivity",sub=""){
                                   ylabs=ylab,
                                   .before=1);
   }
+  ##--convert to long format, with numeric z's, drop "y" column (don't need it)
   ncls5 = ncol(tmp5);
   tmp6 = tmp5 |> dplyr::inner_join(tmp1) |>
            tidyr::pivot_longer(ncls5+1:(ncol(tmp1)-ncls),names_to="z",values_to="val") |>
            dplyr::mutate(z=as.numeric(z)) |>
            dplyr::select(!y);
-  return(plotSels(tmp6,sub=sub))
+  
+  ##--make plot----
+  dfrp = tmp6 |> dplyr::distinct(grp2,ylabs,ylab,case,x,m,s,val);
+  if (length(unique(dfrp$s)) > 1) {
+    dfrp = dfrp |> dplyr::mutate(xms=paste0(m," ",x,"\n",s));
+  } else {
+    dfrp = dfrp |> dplyr::mutate(xms=paste0(m," ",x));
+  }
+  mx = max(max(dfrp$val),0.23);
+  p1 = ggplot(dfrp |> dplyr::filter(m=="immature"),
+              aes(x=xms,y=val,colour=case,fill=case)) + 
+         geom_col(position="dodge") + 
+         geom_hline(yintercept=0.23,linetype=3) + 
+         geom_hline(yintercept=0.00,linetype=3) + 
+         scale_y_continuous(limits=c(0,mx)) + 
+         facet_wrap(~ylab,ncol=1) + 
+         labs(x="Population class",y=ylab) + 
+         wtsPlots::getStdTheme() + 
+         theme(axis.title.x=element_blank(),
+               legend.direction="horizontal",
+               legend.position="inside",
+               legend.position.inside=c(0.01,0.99),
+               legend.justification.inside=c(0,1));
+  p2 = p1 %+% (dfrp |> dplyr::filter(m=="mature")) + theme(legend.position="none");
+  pg = cowplot::plot_grid(p1,p2,ncol=1,rel_heights=c(1,1.8))
+  return(pg)
 }
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "TCF",type=="retained",x=="male")
-# compareSelFcns(tmp,"Retention",sub="TCF males");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "TCF",type=="capture",x=="male")
-# compareSelFcns(tmp,"Selectivity",sub="TCF males");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "TCF",type=="capture",x=="female")
-# compareSelFcns(tmp,"Selectivity",sub="TCF females");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "SCF",type=="capture",x=="male")
-# compareSelFcns(tmp,"Selectivity",sub="SCF males");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "SCF",type=="capture",x=="female")
-# compareSelFcns(tmp,"Selectivity",sub="SCF females");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "RKF",type=="capture",x=="male")
-# compareSelFcns(tmp,"Selectivity",sub="RKF males");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "RKF",type=="capture",x=="female")
-# compareSelFcns(tmp,"Selectivity",sub="RKF females");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "GFA",type=="capture",x=="male")
-# compareSelFcns(tmp,"Selectivity",sub="GFA males");
-# tmp =  dfrSel |> dplyr::filter(fleet %in% "GFA",type=="capture",x=="female")
-# compareSelFcns(tmp,"Selectivity",sub="GFA females");
+# dfrM = wtsGMACS::extractNaturalMortality(resGMACS,resTCSAM02);
+# compareNaturalMortalityty(dfrM);
 
 
 
