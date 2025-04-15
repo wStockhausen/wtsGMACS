@@ -84,7 +84,7 @@ readParFile<-function(parfn=NULL){
       lst[[r+1]] = tibble::tibble(index=ctr,param=param_,name=nam,par_idx=par_idx_,idx=idx_,value=val);
       ctr = max(ctr);
     }
-    dfr = dplyr::bind_rows(lst);
+    dfr = dplyr::bind_rows(lst)|> dplyr::mutate(value=unname(value,force=TRUE));
     class(dfr)<-c("gmacs_par",class(dfr));
     
     return(dfr)
@@ -92,6 +92,6 @@ readParFile<-function(parfn=NULL){
 }
 # parfn="testing/example_results/gmacs.par";
 # dfrPar = readParFile(list(test1=parfn,test2=parfn));
-
+# str(dfrPar$value)
 
 
