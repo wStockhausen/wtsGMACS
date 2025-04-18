@@ -35,15 +35,15 @@ compareNaturalMortality<-function(dfr,ylab="M",plotZ=FALSE){
   ##--cross cases----
   tmp2  = tmp1 |> dplyr::select(tidyselect::any_of(1:ncls));
   tmp2a = tmp2 |> dplyr::cross_join(tmp2);
-  tmp3  = tmp2a |> dplyr::filter(!(case.x==case.y));
+  tmp3  = tmp2a |> dplyr::filter(!(case.x==case.y),(stringr::str_starts(case.x,"gmacs")));
   if (nrow(tmp3)>0){
     ##--select unique case combinations out of duplicates and self-crosses
-    tmp4 = tmp3 |> dplyr::mutate(check=(any(unlist(y.y) %in% unlist(y.x))),
-                                 grp2=paste(group.x,group.y),
-                                 ylabs=paste0(ylab.x,"\n",ylab.y),
-                                 .before=1) |>
-                   dplyr::filter(check,stringr::str_starts(case.x,"gmacs")) |>
-                   dplyr::select(!check);
+    tmp4 = tmp3 |> dplyr::rowwise() |> 
+             dplyr::mutate(check=(any(unlist(y.y) %in% unlist(y.x)))) |> 
+             dplyr::ungroup() |> dplyr::filter(check) |> 
+             dplyr::mutate(grp2=paste(group.x,group.y),
+                           ylabs=paste0(ylab.x,"\n",ylab.y),
+                           .before=1);
     xcols = names(tmp4)[stringr::str_ends(names(tmp4),".x")]
     ycols = names(tmp4)[stringr::str_ends(names(tmp4),".y")]
     tmp5g = tmp4 |> dplyr::select(tidyselect::any_of(c("grp2","ylabs",xcols)));
