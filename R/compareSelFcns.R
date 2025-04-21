@@ -24,6 +24,7 @@ compareSelFcns<-function(dfr,ylab="Selectivity",sub=""){
   plotSels<-function(dfr,ylab="Selectivity",sub=""){
     ggplot(dfr,aes(x=z,y=val,colour=case)) +
       geom_line() +
+      geom_vline(xintercept=125,linetype=3) + 
       facet_wrap(~ylabs) +
       scale_y_continuous(limits=c(0,NA)) +
       labs(x="size (mm CW)",y=ylab,subtitle=sub) +
@@ -84,6 +85,58 @@ compareSelFcns<-function(dfr,ylab="Selectivity",sub=""){
 # compareSelFcns(tmp,"Selectivity",sub="GFA males");
 # tmp =  dfrSel |> dplyr::filter(fleet %in% "GFA",type=="capture",x=="female")
 # compareSelFcns(tmp,"Selectivity",sub="GFA females");
+
+#' 
+#' @title Get unique sel/ret functions from a set of model cases and years
+#' @description Function to get unique sel functions from a set of model cases and years.
+#' @param dfr - dataframe of sel/ret functions from [extractSelFcns()]
+#' @details Extracts unique sel/ret functions and labels them by model "case" and years.
+#' @import dplyr 
+#' @import stringr 
+#' @importFrom tidyselect any_of
+#' @importFrom wtsUtilities collapseIntegersToString
+#' @importFrom wtsUtilities collectValuesByGroup
+#' 
+#' @export
+#' 
+getUniqSelFcns<-function(dfr){
+  cols = names(dfr)[names(dfr) %in% c("case","fleet","y","x","m","s","z","val")];
+  ncls = length(cols);
+  tmp0 = dfr |> dplyr::select(tidyselect::all_of(cols));
+  tmp1 = wtsUtilities::collectValuesByGroup(tmp0,collect="y",names_from="z",values_from="val");
+  tmp1 = tmp1 |> dplyr::rowwise() |>
+                 dplyr::mutate(ylab=wtsUtilities::collapseIntegersToString(y),.before=y) |>
+                 dplyr::ungroup();
+  tmp2  = tmp1 |> dplyr::select(tidyselect::any_of(1:ncls));
+  tmp2a = tmp2 |> dplyr::cross_join(tmp2);
+  tmp3  = tmp2a |> dplyr::filter(!(case.x==case.y),(stringr::str_starts(case.x,"gmacs")));
+  if (nrow(tmp3)>0){
+    tmp4 = tmp3 |> dplyr::rowwise() |> 
+             dplyr::mutate(check=(any(unlist(y.y) %in% unlist(y.x)))) |> 
+             dplyr::ungroup() |> dplyr::filter(check) |> 
+             dplyr::mutate(grp2=paste(group.x,group.y),
+                           ylabs=paste0(ylab.x,"\n",ylab.y),
+                           .before=1);
+    xcols = names(tmp4)[stringr::str_ends(names(tmp4),".x")]
+    ycols = names(tmp4)[stringr::str_ends(names(tmp4),".y")]
+    tmp5g = tmp4 |> dplyr::select(tidyselect::any_of(c("grp2","ylabs",xcols)));
+    names(tmp5g) = c("grp2","ylabs",stringr::str_remove(xcols,".x"));
+    tmp5t = tmp4 |> dplyr::select(tidyselect::any_of(c("grp2","ylabs",ycols)));
+    names(tmp5t) = c("grp2","ylabs",stringr::str_remove(ycols,".y"));
+    tmp5 = dplyr::bind_rows(tmp5g,tmp5t);
+  } else {
+    paste("got here");
+    tmp5 = tmp2 |> dplyr::mutate(grp2=group,
+                                  ylabs=ylab,
+                                  .before=1);
+  }
+  ncls5 = ncol(tmp5);
+  tmp6 = tmp5 |> dplyr::inner_join(tmp1) |>
+           tidyr::pivot_longer(ncls5+1:(ncol(tmp1)-ncls),names_to="z",values_to="val") |>
+           dplyr::mutate(z=as.numeric(z)) |>
+           dplyr::select(!y);
+  return(tmp6)
+}
 
 
 
