@@ -8,7 +8,7 @@ readStdFile(stdfn = NULL)
 }
 \arguments{
 \item{stdfn}{\itemize{
-\item path/filename of std file (or list or vector)
+\item (possibly named) path/filename of std file, or a list or (possibly named) vector
 }}
 }
 \value{
@@ -20,13 +20,13 @@ Function to create a \code{gmacs_std} dataframe from an ADMB std file.
 \details{
 The returned tibble will have columns
 \itemize{
+\item{case - model case name (taken from the list or vector element name) or number. Value is 'gmacs' if only an unnamed std file is given.}
 \item{index - index of the parameter value in the std file}
 \item{param - name of the parameter as given in the std file}
 \item{name - parsed parameter name, dropping any \verb{[...]} index notation}
 \item{idx - the \code{...} within any \verb{[...]} in the parameter name, or NA if none}
 \item{est - parameter estimate or convergence quantity value}
 \item{std - estimated (delta-method) standard error}
-\item{case - model case name (or number). Note: only included if stdfn is a list or vector}
 }
 
 Note that parameters in \code{gmacs_par} and \code{gmacs_std} objects can be linked together by

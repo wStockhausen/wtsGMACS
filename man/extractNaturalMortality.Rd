@@ -8,7 +8,7 @@ extractNaturalMortality(resGMACS, resTCSAM02 = NULL)
 }
 \arguments{
 \item{resGMACS}{\itemize{
-\item 
+\item a gmacs_reslst or gmacs_rep1 object
 }}
 
 \item{resTCSAM02}{\itemize{
@@ -22,5 +22,5 @@ dataframe
 Function to extract natural mortality rates from a gmacs and a tcsam02 model run.
 }
 \details{
-Return a dataframe in TCSAM02 standard canonical format.
+Returns a dataframe in TCSAM02 standard canonical format.
 }

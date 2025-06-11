@@ -7,7 +7,9 @@
 readParFile(parfn = NULL)
 }
 \arguments{
-\item{parfn}{= filename of par file (or a list or vector of such)}
+\item{parfn}{\itemize{
+\item a (possibly named) list or vector of par file filenames
+}}
 }
 \value{
 a \code{gmacs_par} object (a \link{tibble} dataframe of class 'gmacs_par') corresponding to the par file(s).
@@ -18,13 +20,13 @@ Function to create a \code{gmacs_par} dataframe from GMACS ADMB par files.
 \details{
 The returned tibble will have columns
 \itemize{
+\item{case - model case name (taken from the list or vector element name) or number. Value is 'gmacs' if only an unnamed par file is given.}
 \item{item - parameter counter}
 \item{name - full parameter name (i.e., 'name\link{xx}'), or 'number of parameters','objective function','max gradient'}
 \item{name - parsed parameter name (i.e., 'name'), or 'number of parameters','objective function','max gradient')}
 \item{par_idx - parameter number_vector index (i.e., 'xx' as number)}
 \item{idx - parameter vector_vector index (i.e., index into parameter vector)}
 \item{value - parameter estimate or convergence quantity value}
-\item{case - model case name (or number). Note: only included if parfn is a list or vector}
 }
 The ADMB convergence information is given in the first three rows of the tibble,
 associated with the names 'number of parameters','objective function',and 'max gradient'.

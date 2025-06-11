@@ -3,19 +3,19 @@
 #'
 #'@description Function to create a `gmacs_std` dataframe from an ADMB std file.
 #'
-#'@param stdfn - path/filename of std file (or list or vector)
+#'@param stdfn - (possibly named) path/filename of std file, or a list or (possibly named) vector
 #'
 #'@returns a `gmacs_std` object (a [tibble] dataframe of class 'gmacs_std') corresponding to the std file(s)
 #'
 #'@details The returned tibble will have columns
 #'\itemize{ 
+#'  \item{case - model case name (taken from the list or vector element name) or number. Value is 'gmacs' if only an unnamed std file is given.}
 #'  \item{index - index of the parameter value in the std file}
 #'  \item{param - name of the parameter as given in the std file}
 #'  \item{name - parsed parameter name, dropping any `[...]` index notation}
 #'  \item{idx - the `...` within any `[...]` in the parameter name, or NA if none}
 #'  \item{est - parameter estimate or convergence quantity value}
 #'  \item{std - estimated (delta-method) standard error}
-#'  \item{case - model case name (or number). Note: only included if stdfn is a list or vector}
 #'} 
 #'
 #'Note that parameters in `gmacs_par` and `gmacs_std` objects can be linked together by 
@@ -50,6 +50,9 @@ readStdFile<-function(stdfn=NULL){
         warning(paste0("Std file '",stdfn,"' does not exist. Returning NULL."));
         return(NULL);
       }
+    
+      case_ = names(stdfn);
+      if (is.null(case_)) case_ = "gmacs";
       
       r1<-readLines(con=stdfn);
       #parse first line, which gives column names
@@ -89,11 +92,15 @@ readStdFile<-function(stdfn=NULL){
       dfr = dplyr::bind_rows(lst) |> 
               dplyr::mutate(
                 dplyr::across(c(1,4:7),as.numeric)
-              );
+              ) |> 
+              dplyr::mutate(case=case_,.before=1);
       class(dfr)<-c("gmacs_std",class(dfr));
       
       return(dfr)
   }
 }
 # stdfn  = "testing/example_results/gmacs.std";
+# dfrStd = readStdFile(stdfn);
+# dfrStd = readStdFile(c(test05=stdfn));
+# dfrStd = readStdFile(list(test25=stdfn));
 # dfrStd = readStdFile(c(stdfn,stdfn));

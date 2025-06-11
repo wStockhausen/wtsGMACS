@@ -3,19 +3,19 @@
 #'
 #'@description Function to create a `gmacs_par` dataframe from GMACS ADMB par files.
 #'
-#'@param parfn = filename of par file (or a list or vector of such)
+#'@param parfn - a (possibly named) list or vector of par file filenames 
 #'
 #'@returns a `gmacs_par` object (a [tibble] dataframe of class 'gmacs_par') corresponding to the par file(s).
 #'
 #'@details The returned tibble will have columns
 #'\itemize{ 
+#'  \item{case - model case name (taken from the list or vector element name) or number. Value is 'gmacs' if only an unnamed par file is given.}
 #'  \item{item - parameter counter}
 #'  \item{name - full parameter name (i.e., 'name[xx]'), or 'number of parameters','objective function','max gradient'}
 #'  \item{name - parsed parameter name (i.e., 'name'), or 'number of parameters','objective function','max gradient')}
 #'  \item{par_idx - parameter number_vector index (i.e., 'xx' as number)}
 #'  \item{idx - parameter vector_vector index (i.e., index into parameter vector)}
 #'  \item{value - parameter estimate or convergence quantity value}
-#'  \item{case - model case name (or number). Note: only included if parfn is a list or vector}
 #'}
 #' The ADMB convergence information is given in the first three rows of the tibble, 
 #' associated with the names 'number of parameters','objective function',and 'max gradient'. 
@@ -53,7 +53,10 @@ readParFile<-function(parfn=NULL){
       warning(paste0("Par file '",parfn,"' does not exist. Returning NULL."));
       return(NULL);
     }
-      
+    
+    case_ = names(parfn);
+    if (is.null(case_)) case_ = "gmacs";
+    
     r1<-readLines(con=parfn);
     lst = list();
     
@@ -84,13 +87,17 @@ readParFile<-function(parfn=NULL){
       lst[[r+1]] = tibble::tibble(index=ctr,param=param_,name=nam,par_idx=par_idx_,idx=idx_,value=val);
       ctr = max(ctr);
     }
-    dfr = dplyr::bind_rows(lst)|> dplyr::mutate(value=unname(value,force=TRUE));
+    dfr = dplyr::bind_rows(lst)|> 
+            dplyr::mutate(value=unname(value,force=TRUE)) |> 
+            dplyr::mutate(case=case_,.before=1);
     class(dfr)<-c("gmacs_par",class(dfr));
     
     return(dfr)
   }
 }
 # parfn="testing/example_results/gmacs.par";
+# dfrPar = readParFile(parfn);
+# dfrPar = readParFile(c(test=parfn));
 # dfrPar = readParFile(list(test1=parfn,test2=parfn));
 # str(dfrPar$value)
 

@@ -1,10 +1,10 @@
 #'
 #' @title Extract natural mortality rates from a gmacs and a tcsam02 model run
 #' @description Function to extract natural mortality rates from a gmacs and a tcsam02 model run.
-#' @param resGMACS -
+#' @param resGMACS - a gmacs_reslst or gmacs_rep1 object
 #' @param resTCSAM02 -
 #' @return dataframe
-#' @details Return a dataframe in TCSAM02 standard canonical format.
+#' @details Returns a dataframe in TCSAM02 standard canonical format.
 #' @import dplyr
 #' @import rCompTCMs
 #' @import tidyr
@@ -12,20 +12,31 @@
 #' @export
 #'
 extractNaturalMortality<-function(resGMACS,resTCSAM02=NULL){
-  rep = resGMACS[[1]]$rep;
-  zBs = rep$size_midpoints;
-  nZBs = length(zBs);
-  #--get gmacs M rates----
-  dfrM = rep$`Natural_mortality-by-class` |> chkNames() |>
-                 tidyr::pivot_longer(cols=4+(1:nZBs),names_to="z",values_to="val") |>
-                 dplyr::rename(y=year,x=sex,m=maturity,s=shell_cond) |>
-                 dplyr::mutate(dplyr::across(c(1,5,6),as.numeric),
-                               case=paste("gmacs",names(resGMACS)[1])) |>
-                 rCompTCMs::getMDFR.CanonicalFormat();
+  if (inherits(resGMACS,"gmacs_reslst")) {
+    lst=list();
+    for (nm in names(resGMACS$repsLst)){
+      #--testing: nm = names(resGMACS$repsLst)[1];
+      lst[[nm]] = extractNaturalMortality(resGMACS$repsLst[[nm]]) |> 
+                    dplyr::mutate(case=nm);
+    }
+    dfrM = dplyr::bind_rows(lst);
+    rm(lst);
+  } else if (inherits(resGMACS,"gmacs_rep1")) {
+    rep = resGMACS;
+    zBs = rep$size_midpoints;
+    nZBs = length(zBs);
+    #--get gmacs M rates----
+    dfrM = rep$`Natural_mortality-by-class` |> chkNames() |>
+                   tidyr::pivot_longer(cols=4+(1:nZBs),names_to="z",values_to="val") |>
+                   dplyr::rename(y=year,x=sex,m=maturity,s=shell_cond) |>
+                   dplyr::mutate(dplyr::across(c(1,5,6),as.numeric),
+                                 case=paste("gmacs",names(resGMACS)[1])) |>
+                   rCompTCMs::getMDFR.CanonicalFormat();
+  }
   if (!is.null(resTCSAM02)){
     dfrMt = rCompTCMs::extractMDFR.Pop.NaturalMortality(resTCSAM02,type="M_yxmsz") |> 
               dplyr::mutate(z=as.numeric(z));
-    if (length(unique(dfrM$x))==1) {
+    if (length(unique(dfrMt$x))==1) {
       cols = names(dfrMt)[!(names(dfrMt) %in% c("x","val"))];
       dfrMt = dfrMt |> dplyr::mutate(x="undetermined") |> 
                 dplyr::group_by(!!!rlang::syms(cols)) |> 

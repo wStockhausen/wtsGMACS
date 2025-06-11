@@ -25,6 +25,7 @@ Function to create a \code{gmacs_allstd} dataframe from Gmacsall.std files.
 \details{
 The returned tibble as columns
 \itemize{
+\item{case - model case name (taken from the list or vector element name) or number. Value is 'gmacs' if only a single unnamed filename is given.}
 \item{index - index of the parameter value in the std file}
 \item{param - name of the parameter as given in the std file}
 \item{name - parsed parameter name, dropping any \verb{[...]} index notation}
