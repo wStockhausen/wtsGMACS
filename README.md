@@ -29,9 +29,9 @@ installed using:
 This R package requires the following R packages be installed (links are
 to repositories):
 
--   tcsamFunctions \[https://github.com/wStockhausen/tcsamFunctions\]
--   wtsPlots \[https://github.com/wStockhausen/wtsPlots\]
--   wtsUtilities \[https://github.com/wStockhausen/wtsUtilities\]
+-   tcsamFunctions [https://github.com/wStockhausen/tcsamFunctions]
+-   wtsPlots [https://github.com/wStockhausen/wtsPlots]
+-   wtsUtilities [https://github.com/wStockhausen/wtsUtilities]
 
 The packages above can be installed using
 
