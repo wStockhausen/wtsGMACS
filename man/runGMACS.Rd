@@ -5,15 +5,20 @@
 \title{Run a GMACS model}
 \usage{
 runGMACS(
+  inp_fns = NULL,
   runpath = ".",
-  runCmds = list(path2exe = ".", path2dat = ".", pinFile = NULL, os = NULL, hess = FALSE,
-    minPhase = NULL, maxPhase = NULL, mcmc = FALSE, mc.N = 1e+06, mc.save = 1000,
-    mc.scale = 1000, jitter = FALSE, iseed = NULL, fullClean = FALSE, cleanup = TRUE,
-    verbose = FALSE),
+  runCmds = list(inp_fns = inp_fns, exe = "gmacs", path2exe = ".", path2dat = ".",
+    path2pin = ".", pinFile = NULL, os = NULL, hess = FALSE, minPhase = NULL, maxPhase =
+    NULL, mcmc = FALSE, mc.N = 1e+06, mc.save = 1000, mc.scale = 1000, jitter = FALSE,
+    iseed = NULL, fullClean = FALSE, cleanup = TRUE, verbose = FALSE),
   test = FALSE
 )
 }
 \arguments{
+\item{inp_fns}{\itemize{
+\item name(s) of data, ctl, prj files (default = NULL: must supply one or all)
+}}
+
 \item{runpath}{\itemize{
 \item path to folder in which to run model
 }}

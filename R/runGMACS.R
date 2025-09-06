@@ -1,6 +1,7 @@
 #' 
 #' @title Run a GMACS model 
 #' @description Function to run a GMACS model. 
+#' @param inp_fns - name(s) of data, ctl, prj files (default = NULL: must supply one or all)
 #' @param runpath - path to folder in which to run model
 #' @param runCmds - list of inputs to [getRunCommands()]
 #' @returns NULL (if `test`==TRUE), or a `gmacspar`-class dataframe.
@@ -14,10 +15,14 @@
 #' 
 #' @export
 #' 
-runGMACS<-function(runpath='.',
+runGMACS<-function(inp_fns=NULL,
+                   runpath='.',
                    runCmds=
-                     list(path2exe=".",
+                     list(inp_fns=inp_fns,
+                          exe="gmacs",
+                          path2exe=".",
                           path2dat='.',
+                          path2pin=".",
                           pinFile=NULL,
                           os=NULL,
                           hess=FALSE,

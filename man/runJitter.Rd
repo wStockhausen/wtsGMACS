@@ -5,9 +5,13 @@
 \title{Function to run GMACS multiple times using jittered initial parameter values.}
 \usage{
 runJitter(
-  path2out = ".",
+  inp_fns = NULL,
+  pinFile = NULL,
+  exe = "gmacs",
   path2exe = ".",
   path2dat = ".",
+  path2pin = path2dat,
+  path2out = ".",
   numRuns = 3,
   minPhase = 1,
   onlyEvalJitter = FALSE,
@@ -22,16 +26,32 @@ runJitter(
 )
 }
 \arguments{
-\item{path2out}{\itemize{
-\item path to top folder for model output
+\item{inp_fns}{\itemize{
+\item name(s) of data, ctl, prj files (default = NULL: must supply one or all)
+}}
+
+\item{pinFile}{\itemize{
+\item pin file to set values for variables with phase < 0 (not estimated) (default: NULL)
+}}
+
+\item{exe}{\itemize{
+\item name of gmacs executable (without extension) (default='gmacs')
 }}
 
 \item{path2exe}{\itemize{
-\item path to model executable
+\item path to model executable (default: '.')
 }}
 
 \item{path2dat}{\itemize{
-\item path to model dat, ctl, and prj files
+\item path to model dat, ctl, and prj files (default: '.')
+}}
+
+\item{path2pin}{\itemize{
+\item path to pin file (default: \code{path2dat})
+}}
+
+\item{path2out}{\itemize{
+\item path to top folder for model output (default: '.')
 }}
 
 \item{numRuns}{\itemize{
@@ -50,6 +70,18 @@ runJitter(
 \item filename for jittered results
 }}
 
+\item{calcOFL}{\itemize{
+\item does nothing at present (default=FALSE)
+}}
+
+\item{calcOFLJitter}{\itemize{
+\item does nothing at present (default=FALSE)
+}}
+
+\item{saveResults}{\itemize{
+\item (default=FALSE)
+}}
+
 \item{cleanup}{\itemize{
 \item T/F to clean up SOME model output files after each run
 }}
@@ -60,6 +92,10 @@ runJitter(
 
 \item{cleanupAll}{\itemize{
 \item T/F to clean up ALMOST ALL model output files after each run
+}}
+
+\item{test}{\itemize{
+\item T/F to run as a test
 }}
 }
 \value{
@@ -81,8 +117,10 @@ initial starting values to assess model convergence.
 \details{
 For each model run, this function creates a shell script ('./tmp.sh') in the
 current working directory and uses it to run the ADMB version of the GMACS model.
-Initial model parameters are jittered based on the system clock time as a seed
-to the random number generator. The seed and final objective function value are
+Initial model parameters with phase > 0 are jittered based on the system clock time as a seed
+to the random number generator. If a pin file is given (\code{pinFile}), the values for
+model parameters that are \emph{not} estimated are taken from that file, otherwise they are
+taken from the initial values specified in the ctl file. The seed and final objective function value are
 saved for each model run in a csv file (the value of out.csv).
 
 When all the models requested have been run,

@@ -5,8 +5,11 @@
 \title{Generate run commands for a GMACS model run}
 \usage{
 getRunCommands(
+  inp_fns = NULL,
+  exe = "gmacs",
   path2exe = ".",
   path2dat = ".",
+  path2pin = ".",
   pinFile = NULL,
   os = NULL,
   hess = FALSE,
@@ -24,16 +27,28 @@ getRunCommands(
 )
 }
 \arguments{
+\item{inp_fns}{\itemize{
+\item name(s) of data, ctl, prj files (default = NULL: must supply one or all)
+}}
+
+\item{exe}{\itemize{
+\item name of gmacs executable (without extension) (default='gmacs')
+}}
+
 \item{path2exe}{\itemize{
-\item path to gmacs executable
+\item path to gmacs executable (default = ".")
 }}
 
 \item{path2dat}{\itemize{
-\item path to folder with input dat, data, ctl, and prj files
+\item path to folder with input dat, data, ctl, and prj files (default = ".")
+}}
+
+\item{path2pin}{\itemize{
+\item path to folder with pin file (default = ".")
 }}
 
 \item{pinFile}{\itemize{
-\item if not NULL, the path to the pin file used to initialize the parameters
+\item the name of the pin file used to initialize the parameters
 }}
 
 \item{os}{\itemize{
@@ -96,9 +111,9 @@ Function to generate a script to make a GMACS2 model run.
 }
 \details{
 . All files in \code{path2dat} are copied to the "current" folder. If the
-pinfile to used is in this folder, it will be copied into the "current" folder and
+pinFile to be used is in this folder, it will be copied into the "current" folder and
 only the file name (e.g., 'gmacs.pin') needs to be given. If \code{pinFile} is NULL,
-the model is iniitialized from the ctl file.
+the model is initialized from the ctl file.
 If \code{cleanup} is TRUE, then .bar, .b0*, .p0*, .r0*, variance,
 and fimn.log files are deleted.\cr
 }
