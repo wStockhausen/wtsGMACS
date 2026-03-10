@@ -60,7 +60,7 @@ compareFitsZCs<-function(dfr,
   if (useLines)  p = p + geom_line(aes(x=z,y=val,colour=case),            data=dfrp,linewidth=lineSize,alpha=alpha)
   if (usePoints) p = p + geom_point(aes(x=z,y=val,colour=case,shape=case),data=dfrp,size=pointSize)
 #  p <- p + ylim(0,rng[2])
-  p <- p + geom_hline(yintercept=0,colour='black',size=0.5)
+  p <- p + geom_hline(yintercept=0,colour='black',linewidth=0.5)
   p <- p + labs(x=xlab,y=ylab)
   p <- p + facet_wrap(~y,ncol=ncols,dir='v')
   p <- p + labs(subtitle=sub_)
