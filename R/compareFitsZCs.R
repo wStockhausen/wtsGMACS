@@ -1,5 +1,5 @@
 #' 
-#' @title Plot Gmacs size composition fits 
+#' @title Plot GMACS size composition fits 
 #' @description Function to plot fits to size compositions. 
 #' @param dfr - dataframe with observed/predicted size comps from Gmacs rep1 file(s)
 #' @param ncols - number of panel columns for figure

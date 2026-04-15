@@ -2,7 +2,7 @@
 % Please edit documentation in R/compareFitsZCsAlt.R
 \name{compareFitsZCsAlt}
 \alias{compareFitsZCsAlt}
-\title{Plot Gmacs size composition fits}
+\title{Plot GMACS size composition fits}
 \usage{
 compareFitsZCsAlt(
   dfr,

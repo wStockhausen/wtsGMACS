@@ -1,8 +1,8 @@
 Package: wtsGMACS
 Type: Package
 Title: Functions related to the BSAI Tanner crab stock assessment using GMACS
-Version: 2026.03.09
-Date: 2026-03-09
+Version: 2026.04.14
+Date: 2026-04-14
 Author: William Stockhausen
 Maintainer: William Stockhausen <william.stockhausen@noaa.gov>
 Description: This package contains a collection of R functions related to the
@@ -24,6 +24,6 @@ Imports:
     wtsUtilities
 Suggests: rCompTCMs
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Encoding: UTF-8
 URL: https://wstockhausen.github.io/wtsGMACS/

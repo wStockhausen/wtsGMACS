@@ -2,7 +2,7 @@
 % Please edit documentation in R/compareNaturalMortality.R
 \name{compareNaturalMortality}
 \alias{compareNaturalMortality}
-\title{Create a \link{ggplot2} object to compare tcsam02 and gmacs natural mortality rates}
+\title{Create a \link[ggplot2:ggplot2-package]{ggplot2::ggplot2} object to compare tcsam02 and gmacs natural mortality rates}
 \usage{
 compareNaturalMortality(dfr, ylab = "M", plotZ = FALSE)
 }
@@ -20,10 +20,10 @@ compareNaturalMortality(dfr, ylab = "M", plotZ = FALSE)
 }}
 }
 \value{
-\link{ggplot2} plot object
+\link[ggplot2:ggplot2-package]{ggplot2::ggplot2} plot object
 }
 \description{
-Function to create a \link{ggplot2} object to compare tcsam02 and gmacs
+Function to create a \link[ggplot2:ggplot2-package]{ggplot2::ggplot2} object to compare tcsam02 and gmacs
 selectivity/retention functions. Can also be used to plot either model type.
 }
 \details{

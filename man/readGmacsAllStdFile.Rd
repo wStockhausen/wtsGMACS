@@ -16,7 +16,7 @@ readGmacsAllStdFile(stdfn = NULL, verbose = FALSE)
 }}
 }
 \value{
-a \code{gmacs_allstd} object (a \link{tibble} dataframe of class 'gmacs_allstd') corresponding to the
+a \code{gmacs_allstd} object (a \link[tibble:tibble]{tibble::tibble} dataframe of class 'gmacs_allstd') corresponding to the
 std file(s)
 }
 \description{

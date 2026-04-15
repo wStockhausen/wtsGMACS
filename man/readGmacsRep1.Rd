@@ -29,7 +29,7 @@ it will be created and set to 1 initially. If it already exists when this functi
 it will  be reset to 1 initially.
 }
 \examples{
-\dontshow{if (FALSE) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (FALSE) withAutoprint(\{ # examplesIf}
 # example code
   fn = "../../ModelRuns/TannerCrab24_01/gmacs.rep1";
   rep = readGmacsRep1(fn,verbose=FALSE);

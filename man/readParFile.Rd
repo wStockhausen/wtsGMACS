@@ -12,7 +12,7 @@ readParFile(parfn = NULL)
 }}
 }
 \value{
-a \code{gmacs_par} object (a \link{tibble} dataframe of class 'gmacs_par') corresponding to the par file(s).
+a \code{gmacs_par} object (a \link[tibble:tibble]{tibble::tibble} dataframe of class 'gmacs_par') corresponding to the par file(s).
 }
 \description{
 Function to create a \code{gmacs_par} dataframe from GMACS ADMB par files.

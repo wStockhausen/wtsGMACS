@@ -12,7 +12,7 @@ readStdFile(stdfn = NULL)
 }}
 }
 \value{
-a \code{gmacs_std} object (a \link{tibble} dataframe of class 'gmacs_std') corresponding to the std file(s)
+a \code{gmacs_std} object (a \link[tibble:tibble]{tibble::tibble} dataframe of class 'gmacs_std') corresponding to the std file(s)
 }
 \description{
 Function to create a \code{gmacs_std} dataframe from an ADMB std file.
