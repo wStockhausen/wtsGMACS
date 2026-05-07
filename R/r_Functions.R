@@ -1085,7 +1085,7 @@ extractFitsToMMOs.Details<-function(lstGMACS,lstTCSAM02=NULL){
 #'@param lstGMACS - gmacs_reslst or gmacs_replst object, or NULL
 #'@param lstTCSAM - tcsam02.resLst object, or NULL
 #'@return dataframe 
-#'#export
+#'@export
 #'
 extractMgtQtys<-function(lstGMACS,lstTCSAM02=NULL){
   if (inherits(lstGMACS,"gmacs_reslst")) {

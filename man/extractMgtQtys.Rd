@@ -17,7 +17,6 @@ extractMgtQtys(lstGMACS, lstTCSAM02 = NULL)
 }
 \value{
 dataframe
-#export
 }
 \description{
 Function to extract management quantities from (possibly several) GMACS and TCSAM model runs.
