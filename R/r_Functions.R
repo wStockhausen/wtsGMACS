@@ -1079,6 +1079,58 @@ extractFitsToMMOs.Details<-function(lstGMACS,lstTCSAM02=NULL){
   return(dfr);
 }
 
+#'
+#'@title Extract management quantities from (possibly several) GMACS and TCSAM model runs.
+#'@description Function to extract management quantities from (possibly several) GMACS and TCSAM model runs.
+#'@param lstGMACS - gmacs_reslst or gmacs_replst object, or NULL
+#'@param lstTCSAM - tcsam02.resLst object, or NULL
+#'@return dataframe 
+#'#export
+#'
+extractMgtQtys<-function(lstGMACS,lstTCSAM02=NULL){
+  if (inherits(lstGMACS,"gmacs_reslst")) {
+    lst=list();
+    for (nm in names(lstGMACS$repsLst)){
+      #--testing: nm = names(lstGMACS$repsLst)[1];
+      lst[[nm]] = extractMgtQtys(lstGMACS$repsLst[[nm]]);
+      if (!is.null(lst[[nm]])) lst[[nm]] = lst[[nm]] |>  dplyr::mutate(case=nm);
+    }
+    dfr = dplyr::bind_rows(lst);
+    rm(lst);
+  } else if (inherits(lstGMACS,"gmacs_rep1")) {
+    ##--dfrG part
+    nflt = lstGMACS$Number_of_fleets;
+    dfr  = lstGMACS$`Derived_quantities` |> 
+             dplyr::select(type=param,val=est) |> 
+             dplyr::mutate(dplyr::across(c(val),as.numeric)) |> 
+             dplyr::filter(dplyr::row_number() %in% c(1:7,(7+nflt))) |> 
+             tidyr::pivot_wider(names_from="type",values_from="val") |> 
+             dplyr::mutate(case="gmacs",
+                           avgRec=male_spr_rbar+female_spr_rbar,
+                           OFL=`OFL(tot)`,
+                           Fofl=`Fofl(1)`,
+                           Fmsy=`Fmsy(1)`,
+                           curB=NA,
+                           prjB=`Bcurr/BMSY`*BMSY,
+                           MSY=NA,
+                           B100=male_spr_rbar*`SSSB/R(F=0)`/1000) |>  #--think SSB/R(F=0) is for males; units are grams, need KT so x 1000 if rec in millions
+             dplyr::select(case,OFL,Fofl,prjB,curB,Fmsy,Bmsy=BMSY,MSY,B100,avgRec) |> 
+             tidyr::pivot_longer(cols=c(-1),names_to="type",values_to="val");
+  }
+  if (!is.null(lstTCSAM02)){
+    if (inherits(lstTCSAM02,"tcsam02.resLst")) lst = list(tcsam=lstTCSAM02);
+      dfrT = rTCSAM02::getMDFR.ManagementQuantities(lst) |> 
+               dplyr::mutate(case="tcsam") |> 
+               dplyr::select(case,type,val)  |> 
+               tidyr::pivot_wider(names_from="type",values_from="val") |> 
+               dplyr::mutate(Bmsy=0.35*B100) |> 
+               tidyr::pivot_longer(cols=c(-1),names_to="type",values_to="val");
+    dfr = dplyr::bind_rows(dfr,dfrT);
+  }
+  return(dfr);
+}
+
+
 #--FUNCTION TEMPLATE----
 #'
 #'@title Extract [description] from (possibly several) GMACS and TCSAM model runs.
