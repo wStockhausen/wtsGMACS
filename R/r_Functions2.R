@@ -132,33 +132,35 @@ getFitsToZCs<-function(lstGs,lstT=NULL){
 #' @title Compare fits to size composition data
 #' @description Function to compare fits to size composition.
 #' @param dfr - dataframe created using [getFitsToZCs]. 
+#' @param points - case to plot as points (or NULL)
 #' @return [ggplot2](ggplot) object
 #' @export
 #' 
-plotFitsToZCs<-function(dfr){
+plotFitsToZCs<-function(dfr,points=NULL){
   p = ggplot(dfr,aes(x=z,y=predicted,color=case)) + 
-        geom_point(aes(y=observed),data=dfr,size=1) +  #--data
-        geom_point(data=dfr |> dplyr::filter(case=="g1"),size=1) +        #--g1 pred as pts
-        geom_line() +                                                     #--pred as line
-        facet_wrap(~y) + 
-        labs(x="size (mm CW)") + 
-        wtsPlots::getStdTheme();
+        geom_point(aes(y=observed),data=dfr,size=1);  #--data
+  if (!is.null(points)) p = p + geom_point(data=dfr |> dplyr::filter(case==points),size=1);   #--case to plots as pts
+  p = p + geom_line() +                                                     #--pred as line
+          facet_wrap(~y) + 
+          labs(x="size (mm CW)") + 
+          wtsPlots::getStdTheme();
   return(p);
 }
 
-#' @title Compare size composition data
-#' @description Function to compare size composition.
+#' @title Compare input size composition data
+#' @description Function to compare input size composition.
 #' @param dfr - dataframe created using [getFitsToZCs]. 
+#' @param points - case to plot as points (or NULL)
 #' @return [ggplot2](ggplot) object
 #' @export
 #' 
-plotDataToZCs<-function(dfr,points="g1"){
-  p = ggplot(dfr,aes(x=z,y=observed,color=case)) + 
-        geom_point(data=dfr |> dplyr::filter(case==points),size=1) +      #--case to plots as pts
-        geom_line() +                                                     #--pred as line
-        facet_wrap(~y) + 
-        labs(x="size (mm CW)") + 
-        wtsPlots::getStdTheme();
+plotDataToZCs<-function(dfr,points=NULL){
+  p = ggplot(dfr,aes(x=z,y=observed,color=case));
+  if (!is.null(points)) p = p + geom_point(data=dfr |> dplyr::filter(case==points),size=1);      #--case to plot as pts
+  p = p + geom_line() +   #--predicted as line
+          facet_wrap(~y) + 
+          labs(x="size (mm CW)") + 
+          wtsPlots::getStdTheme();
   return(p);
 }
 

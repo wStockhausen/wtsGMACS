@@ -353,16 +353,17 @@ extractPrM2M<-function(lstGMACS,lstTCSAM02=NULL){
 #'@description Function to extract fishing mortality rates from (possibly several) GMACS and TCSAM model runs.
 #'@param lstGMACS - gmacs_reslst or gmacs_replst object, or NULL
 #'@param lstTCSAM - tcsam02.resLst object, or NULL
-#'@param season - season at which fishery occrurs (default=2)
-#'@return dataframe 
+#'@param seasons - integer vector seasons to extract fishery info for (or "all"; default=2)
+#'@return dataframe with TCSAM02 canonical columns + `season`.
+#'@details The dataframe column `season` will be NA for TCSAM02 model results.
 #'@export
 #'
-extractFisheryFs<-function(lstGMACS,lstTCSAM02=NULL,season=2){
+extractFisheryFs<-function(lstGMACS,lstTCSAM02=NULL,seasons=2){
   if (inherits(lstGMACS,"gmacs_reslst")) {
     lst=list();
     for (nm in names(lstGMACS$repsLst)){
       #--testing: nm = names(lstGMACS$repsLst)[1];
-      lst[[nm]] = extractFisheryFs(lstGMACS$repsLst[[nm]],season=season);
+      lst[[nm]] = extractFisheryFs(lstGMACS$repsLst[[nm]],seasons=seasons);
       if (!is.null(lst[[nm]])) lst[[nm]] = lst[[nm]] |> dplyr::mutate(case=nm);
     }
     dfr = dplyr::bind_rows(lst);
@@ -374,13 +375,17 @@ extractFisheryFs<-function(lstGMACS,lstTCSAM02=NULL,season=2){
       if (is.null(dfrp)) return(NULL);
     }
     #--get gmacs fishery Fs----
-    dfr = dfrp |> # chkNames() |>
-            dplyr::select(c(1:3,3+season));
-    dfr$val = as.numeric(dfr[[as.character(season)]]);
-    dfr  = dfr |> dplyr::select(fleet,y=year,x=sex,val) |>
+    ssns = ncol(dfrp)-3; #--number of season
+    if ((!is.numeric(seasons)&&(tolower(seasons)=="all")))
+      seasons = 1:ssns;
+    dfr = dfrp |> tidyr::pivot_longer(c(3+1:ssns),names_to="season",values_to="val") |>
+            dplyr::mutate(dplyr::across(c(season,val),as.numeric))  |> 
+            dplyr::filter(season %in% seasons);
+    dfr  = dfr |> dplyr::select(fleet,pc=season,y=year,x=sex,val) |>
                   dplyr::mutate(y=as.numeric(y),
                                 case=paste("gmacs")) |>
-                  rCompTCMs::getMDFR.CanonicalFormat();
+                  rCompTCMs::getMDFR.CanonicalFormat() |> 
+                  dplyr::rename(season=pc);#--need to rename "pc" to ""season"
   }
   if (!is.null(lstTCSAM02)){
     if (inherits(lstTCSAM02,"tcsam02.resLst")) lst = list(tcsam=lstTCSAM02)

@@ -4,15 +4,15 @@
 \alias{extractFisheryFs}
 \title{Extract fishing mortality rates from (possibly several) GMACS and TCSAM model runs.}
 \usage{
-extractFisheryFs(lstGMACS, lstTCSAM02 = NULL, season = 2)
+extractFisheryFs(lstGMACS, lstTCSAM02 = NULL, seasons = 2)
 }
 \arguments{
 \item{lstGMACS}{\itemize{
 \item gmacs_reslst or gmacs_replst object, or NULL
 }}
 
-\item{season}{\itemize{
-\item season at which fishery occrurs (default=2)
+\item{seasons}{\itemize{
+\item integer vector seasons to extract fishery info for (or "all"; default=2)
 }}
 
 \item{lstTCSAM}{\itemize{
@@ -20,8 +20,11 @@ extractFisheryFs(lstGMACS, lstTCSAM02 = NULL, season = 2)
 }}
 }
 \value{
-dataframe
+dataframe with TCSAM02 canonical columns + \code{season}.
 }
 \description{
 Function to extract fishing mortality rates from (possibly several) GMACS and TCSAM model runs.
+}
+\details{
+The dataframe column \code{season} will be NA for TCSAM02 model results.
 }

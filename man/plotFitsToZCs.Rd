@@ -4,11 +4,15 @@
 \alias{plotFitsToZCs}
 \title{Compare fits to size composition data}
 \usage{
-plotFitsToZCs(dfr)
+plotFitsToZCs(dfr, points = NULL)
 }
 \arguments{
 \item{dfr}{\itemize{
 \item dataframe created using \link{getFitsToZCs}.
+}}
+
+\item{points}{\itemize{
+\item case to plot as points (or NULL)
 }}
 }
 \value{

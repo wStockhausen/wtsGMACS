@@ -2,18 +2,22 @@
 % Please edit documentation in R/r_Functions2.R
 \name{plotDataToZCs}
 \alias{plotDataToZCs}
-\title{Compare size composition data}
+\title{Compare input size composition data}
 \usage{
-plotDataToZCs(dfr, points = "g1")
+plotDataToZCs(dfr, points = NULL)
 }
 \arguments{
 \item{dfr}{\itemize{
 \item dataframe created using \link{getFitsToZCs}.
+}}
+
+\item{points}{\itemize{
+\item case to plot as points (or NULL)
 }}
 }
 \value{
 \href{ggplot}{ggplot2} object
 }
 \description{
-Function to compare size composition.
+Function to compare input size composition.
 }
