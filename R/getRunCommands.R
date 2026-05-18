@@ -158,8 +158,10 @@ getRunCommands<-function(inp_fns=NULL,
     run.cmds<-gsub("&&mnPhs",str,run.cmds,fixed=TRUE);
     str<-''; if (!is.null(maxPhase)) str<-paste0("-maxph ",maxPhase);
     run.cmds<-gsub("&&mxPhs",str,run.cmds,fixed=TRUE);
-    str<-''; if (!is.null(cout)) str<-paste0(" $@ > ",cout);
-    str<-''; if (!is.null(cout)) str<-paste0("  &> ",cout);  #--directs stdout and stderr to cout
+    str<-''; if (!is.null(cout)){
+               if (tolower(os)!='win') str<-paste0(" $@ > ",cout);        #--directs stdout and stderr to cout
+               if (tolower(os)=='win') str<-paste0(" > ",cout," 2>&1 ");  #--directs stdout and stderr to cout
+             }        
     run.cmds<-gsub("&&cout",str,run.cmds,fixed=TRUE);
 
     if (verbose) cat("Run commands:\n",run.cmds,"\n\n");
