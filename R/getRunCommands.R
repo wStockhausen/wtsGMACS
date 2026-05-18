@@ -19,6 +19,7 @@
 #'@param mc.scale - number of iterations to adjust scale for mcmc calculations
 #'@param jitter - flag (T/F) to use jitter initial values
 #'@param iseed - value for random number seed (or 0 to use start time)
+#'@param cout - filename to direct commandline output to (or NULL to direct it to console)
 #'@param fullClean - flag to clean up almost all files (use when making multiple jitter runs)
 #'@param cleanup - flag (T/F) to clean up unnecessary files
 #'@param verbose - flag (T/F) to print diagnostic info for this function
@@ -50,6 +51,7 @@ getRunCommands<-function(inp_fns=NULL,
                          mc.scale=1000,
                          jitter=FALSE,
                          iseed=NULL,
+                         cout="chk.rep",
                          fullClean=FALSE,
                          cleanup=TRUE,
                          verbose=FALSE){
@@ -105,7 +107,7 @@ getRunCommands<-function(inp_fns=NULL,
     cpyexe<-'';
     cpydat<-'';
     cpypin<-'';
-    opts <- " -rs -nox &&mnPhs &&mxPhs &&mcmc &&nohess &&jitter &&pin !!pinFile";
+    opts <- " -rs -nox &&mnPhs &&mxPhs &&mcmc &&nohess &&jitter &&pin !!pinFile &&cout";
     if (tolower(os)=='win'){
         ##--windows commands----
         model1<-paste(exe,'exe',sep='.');
@@ -156,6 +158,9 @@ getRunCommands<-function(inp_fns=NULL,
     run.cmds<-gsub("&&mnPhs",str,run.cmds,fixed=TRUE);
     str<-''; if (!is.null(maxPhase)) str<-paste0("-maxph ",maxPhase);
     run.cmds<-gsub("&&mxPhs",str,run.cmds,fixed=TRUE);
+    str<-''; if (!is.null(cout)) str<-paste0(" $@ > ",cout);
+    str<-''; if (!is.null(cout)) str<-paste0("  &> ",cout);  #--directs stdout and stderr to cout
+    run.cmds<-gsub("&&cout",str,run.cmds,fixed=TRUE);
 
     if (verbose) cat("Run commands:\n",run.cmds,"\n\n");
 
@@ -193,6 +198,7 @@ getDefaultRunCmds<-function(){
                 mc.scale=1000,
                 jitter=FALSE,
                 iseed=NULL,
+                cout="chk.rep",
                 fullClean=FALSE,
                 cleanup=TRUE,
                 verbose=FALSE);
@@ -213,6 +219,7 @@ getDefaultRunCmds<-function(){
 #                      mc.scale=1000,
 #                      jitter=FALSE,
 #                      iseed=5,
+#                      cout="chk.rep",
 #                      fullClean=TRUE,
 #                      cleanup=TRUE,
 #                      verbose=FALSE)
@@ -232,6 +239,7 @@ getDefaultRunCmds<-function(){
 #                      mc.scale=1000,
 #                      jitter=FALSE,
 #                      iseed=5,
+#                      cout="chk.rep",
 #                      fullClean=TRUE,
 #                      cleanup=TRUE,
 #                      verbose=FALSE)

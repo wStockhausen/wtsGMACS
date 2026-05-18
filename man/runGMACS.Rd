@@ -10,7 +10,7 @@ runGMACS(
   runCmds = list(inp_fns = inp_fns, exe = "gmacs", path2exe = ".", path2dat = ".",
     path2pin = ".", pinFile = NULL, os = NULL, hess = FALSE, minPhase = NULL, maxPhase =
     NULL, mcmc = FALSE, mc.N = 1e+06, mc.save = 1000, mc.scale = 1000, jitter = FALSE,
-    iseed = NULL, fullClean = FALSE, cleanup = TRUE, verbose = FALSE),
+    iseed = NULL, cout = "chk.rep", fullClean = FALSE, cleanup = TRUE, verbose = FALSE),
   test = FALSE
 )
 }

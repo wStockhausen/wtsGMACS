@@ -31,6 +31,7 @@
 #'@param calcOFL - does nothing at present (default=FALSE)
 #'@param calcOFLJitter - does nothing at present (default=FALSE)
 #'@param saveResults - (default=FALSE)
+#'@param cout - filename to direct commandline output to (or NULL to direct it to console)
 #'@param cleanup - T/F to clean up SOME model output files after each run
 #'@param keepFiles - vector of file names to keep, not clean up, after model run
 #'@param cleanupAll - T/F to clean up ALMOST ALL model output files after each run
@@ -61,8 +62,9 @@ runJitter<-function(inp_fns=NULL,
                     calcOFL=FALSE,
                     calcOFLJitter=FALSE,
                     saveResults=FALSE,
+                    cout="chk.rep",
                     cleanup=TRUE,
-                    keepFiles=c("tmp.sh","gmacs.par"),
+                    keepFiles=c("tmp.sh","gmacs.par","jitter.csv"),
                     cleanupAll=FALSE,
                     test=TRUE){
     #start timing
@@ -72,7 +74,7 @@ runJitter<-function(inp_fns=NULL,
     out.csv<-file.path(path2out,out.csv);
 
     #--set up run commands----
-    cmdLst = wtsGMACS::getDefaultRunCmds();
+    cmdLst = getDefaultRunCmds();
     cmdLst$inp_fns  = inp_fns;
     cmdLst$pinFile  = pinFile;
     cmdLst$exe      = exe;
@@ -81,8 +83,16 @@ runJitter<-function(inp_fns=NULL,
     cmdLst$path2pin = normalizePath(path2pin);#--written to batch file/shell script
     cmdLst$minPhase = minPhase;
     cmdLst$jitter   = TRUE;
-    cmdLst$iseed    = 0;  #-use the system time as seed 
+    cmdLst$iseed    = 0;    #-use the system time as seed 
+    cmdLst$cout     = cout; #--direct console output to cout
     cmdLst$cleanup  = cleanup;
+    
+    formatZeros = function(x,width=2,format="d",...){
+                            xp<-as.numeric(as.vector(x));
+                            cxp<-format(xp,width=width,format=format,...);
+                            res<-gsub(" ","0",cxp,fixed=TRUE)
+                            return(res)
+                        };
     
     #run models
     parList<-list();
@@ -90,25 +100,34 @@ runJitter<-function(inp_fns=NULL,
         rc<-0;
         for (r in 1:numRuns){
             cat("\n\n---running GMACS program for",r,"out of",numRuns,"---\n\n");
-            fldr<-paste('run',wtsUtilities::formatZeros(r,width=max(2,ceiling(log10(numRuns)))),sep='');
+            fldr<-paste('run',formatZeros(r,width=max(2,ceiling(log10(numRuns)))),sep='');
             p2f<-normalizePath(file.path(path2out,fldr));#--normalization shouldn't hurt
             par<-runGMACS(runpath=p2f,
                           runCmds=cmdLst,
                           test=test);
             if (!is.null(par)){
                 rc<-rc+1;
-                objFun  <-par$value[par$name=='objective function'];
+                # objFun  <-par$value[par$name=='objective function'];
                 seed    <-par$value[par$name=='jitter_seed'];
-                maxgrad <-par$value[par$name=='max gradient'];
-                tbl<-data.frame(idx=r,objFun=objFun,maxGrad=maxgrad,seed=seed,folder=fldr);
-                if (file.exists(out.csv)) {
-                    utils::write.table(tbl,file=out.csv,sep=",",col.names=FALSE,row.names=FALSE,append=TRUE)
-                } else {
-                    #create out.csv file
-                    utils::write.table(tbl,file=out.csv,sep=",",col.names=TRUE,row.names=FALSE,append=FALSE)
+                if (file.exists(jcsv<-file.path(p2f,"jitter.csv"))){
+                  parList[[fldr]]<-readr::read_csv(jcsv,show_col_types = FALSE) |> 
+                                      dplyr::mutate(idx=r,folder=fldr,seed=seed,.before=1);#--save output
+                    if (file.exists(out.csv)) {
+                        utils::write.table(parList[[fldr]],file=out.csv,sep=",",col.names=FALSE,row.names=FALSE,append=TRUE)
+                    } else {
+                        #create out.csv file
+                        utils::write.table(parList[[fldr]],file=out.csv,sep=",",col.names=TRUE,row.names=FALSE,append=FALSE)
+                    }
                 }
+                # maxgrad <-par$value[par$name=='max gradient'];
+                # tbl<-data.frame(idx=r,objFun=objFun,maxGrad=maxgrad,seed=seed,folder=fldr);
+                # if (file.exists(out.csv)) {
+                #     utils::write.table(tbl,file=out.csv,sep=",",col.names=FALSE,row.names=FALSE,append=TRUE)
+                # } else {
+                #     #create out.csv file
+                #     utils::write.table(tbl,file=out.csv,sep=",",col.names=TRUE,row.names=FALSE,append=FALSE)
+                # }
             }#par not NULL
-            parList[[fldr]]<-par;#--save output
             if (cleanupAll){
                 cat("Cleaning up 'all' files\n\n")
                 fns<-list.files(path=p2f,full.names=FALSE);#vector of file names in folder p2f

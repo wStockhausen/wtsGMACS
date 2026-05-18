@@ -21,6 +21,7 @@ getRunCommands(
   mc.scale = 1000,
   jitter = FALSE,
   iseed = NULL,
+  cout = "chk.rep",
   fullClean = FALSE,
   cleanup = TRUE,
   verbose = FALSE
@@ -89,6 +90,10 @@ getRunCommands(
 
 \item{iseed}{\itemize{
 \item value for random number seed (or 0 to use start time)
+}}
+
+\item{cout}{\itemize{
+\item filename to direct commandline output to (or NULL to direct it to console)
 }}
 
 \item{fullClean}{\itemize{

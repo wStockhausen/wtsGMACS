@@ -19,8 +19,9 @@ runJitter(
   calcOFL = FALSE,
   calcOFLJitter = FALSE,
   saveResults = FALSE,
+  cout = "chk.rep",
   cleanup = TRUE,
-  keepFiles = c("tmp.sh", "gmacs.par"),
+  keepFiles = c("tmp.sh", "gmacs.par", "jitter.csv"),
   cleanupAll = FALSE,
   test = TRUE
 )
@@ -80,6 +81,10 @@ runJitter(
 
 \item{saveResults}{\itemize{
 \item (default=FALSE)
+}}
+
+\item{cout}{\itemize{
+\item filename to direct commandline output to (or NULL to direct it to console)
 }}
 
 \item{cleanup}{\itemize{
