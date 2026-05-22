@@ -108,10 +108,10 @@ runJitter<-function(inp_fns=NULL,
             if (!is.null(par)){
                 rc<-rc+1;
                 # objFun  <-par$value[par$name=='objective function'];
-                seed    <-par$value[par$name=='jitter_seed'];
+                # seed    <-par$value[par$name=='jitter_seed'];
                 if (file.exists(jcsv<-file.path(p2f,"jitter.csv"))){
                   parList[[fldr]]<-readr::read_csv(jcsv,show_col_types = FALSE) |> 
-                                      dplyr::mutate(idx=r,folder=fldr,seed=seed,.before=1);#--save output
+                                      dplyr::mutate(idx=r,folder=fldr,.before=1);#--save output
                     if (file.exists(out.csv)) {
                         utils::write.table(parList[[fldr]],file=out.csv,sep=",",col.names=FALSE,row.names=FALSE,append=TRUE)
                     } else {
@@ -143,7 +143,7 @@ runJitter<-function(inp_fns=NULL,
         tbl<-utils::read.csv(out.csv) |> dplyr::arrange(objFun,abs(maxGrad));
         readr::write_csv(tbl,file=out.csv);  #--write out ordered results
         best<-tbl$idx[1];
-        seed<-tbl$seed[1];
+        seed<-tbl$rseed[1];
         fldr<-tbl$folder[1];
         if (onlyEvalJitter){parList<-NULL;}
 
