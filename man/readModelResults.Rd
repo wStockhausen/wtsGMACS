@@ -16,7 +16,7 @@ readModelResults(fldrs, verbose = FALSE)
 }}
 }
 \value{
-a \code{gmacs_reslst} object: a named list (see \link{@details})
+a \code{gmacs_reslst} object: a named list (see [@details])
 }
 \description{
 Function to read a set of gmacs model results from a (possibly several) model run folder(s).

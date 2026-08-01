@@ -3,7 +3,7 @@
 #' @description Function to read a set of gmacs model results from a (possibly several) model run folder(s).
 #' @param fldrs - a vector of folder names, each with the results from a single model run
 #' @param verbose - flag (T/F) to print diagnostic info
-#' @returns a `gmacs_reslst` object: a named list (see [@details])
+#' @returns a `gmacs_reslst` object: a named list (see \[@details\])
 #' @details A `gmacs_reslst` object is a list with elements
 #' \itemize{
 #' \item{dfrPars - a `gmacs_par` dataframe object with parameter and convergence info from the par file(s), idenitified by `case`}

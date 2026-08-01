@@ -11,7 +11,7 @@
 #'\itemize{ 
 #'  \item{case - model case name (taken from the list or vector element name) or number. Value is 'gmacs' if only an unnamed par file is given.}
 #'  \item{item - parameter counter}
-#'  \item{name - full parameter name (i.e., 'name[xx]'), or 'number of parameters','objective function','max gradient'}
+#'  \item{name - full parameter name (i.e., 'name\[xx\]'), or 'number of parameters','objective function','max gradient'}
 #'  \item{name - parsed parameter name (i.e., 'name'), or 'number of parameters','objective function','max gradient')}
 #'  \item{par_idx - parameter number_vector index (i.e., 'xx' as number)}
 #'  \item{idx - parameter vector_vector index (i.e., index into parameter vector)}

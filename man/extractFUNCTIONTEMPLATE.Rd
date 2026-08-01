@@ -2,7 +2,7 @@
 % Please edit documentation in R/r_Functions.R
 \name{extractFUNCTIONTEMPLATE}
 \alias{extractFUNCTIONTEMPLATE}
-\title{Extract \link{description} from (possibly several) GMACS and TCSAM model runs.}
+\title{Extract [description] from (possibly several) GMACS and TCSAM model runs.}
 \usage{
 extractFUNCTIONTEMPLATE(lstGMACS, lstTCSAM02 = NULL)
 }
@@ -20,5 +20,5 @@ dataframe
 #export
 }
 \description{
-Function to extract \link{description} from (possibly several) GMACS and TCSAM model runs.
+Function to extract [description] from (possibly several) GMACS and TCSAM model runs.
 }

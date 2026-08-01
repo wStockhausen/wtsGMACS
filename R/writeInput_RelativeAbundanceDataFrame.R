@@ -9,7 +9,7 @@
 #' @param sex : "male","female",or "undetermined"
 #' @param maturity - "immature","mature", or "undetermined"
 #' @param shell - "new shell","old shell",or "undetermined"
-#' @param indexType : index type ("sel" [selectivity] or "sel+ret" [selectivity+retention])
+#' @param indexType : index type ("sel" \[selectivity\] or "sel+ret" \[selectivity+retention\])
 #' @param unitsType : units type ("abundance" or "biomass")
 #' @param unitsIn : input catch units (on of "ONES","MILLIONS","KG","THOUSANDS_MT","MILLIONS_LBS","MT","LBS")
 #' @param unitsOut : output catch units (should be "MILLIONS" or "THOUSANDS_MT")

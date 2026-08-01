@@ -34,7 +34,7 @@ writeInput_RelativeAbundanceDataFrame(
 \item "new shell","old shell",or "undetermined"
 }}
 
-\item{indexType}{: index type ("sel" \link{selectivity} or "sel+ret" \link{selectivity+retention})}
+\item{indexType}{: index type ("sel" [selectivity] or "sel+ret" [selectivity+retention])}
 
 \item{unitsType}{: units type ("abundance" or "biomass")}
 

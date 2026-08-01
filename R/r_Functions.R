@@ -1133,8 +1133,8 @@ extractMgtQtys<-function(lstGMACS,lstTCSAM02=NULL){
 
 #--FUNCTION TEMPLATE----
 #'
-#'@title Extract [description] from (possibly several) GMACS and TCSAM model runs.
-#'@description Function to extract [description] from (possibly several) GMACS and TCSAM model runs.
+#'@title Extract \[description\] from (possibly several) GMACS and TCSAM model runs.
+#'@description Function to extract \[description\] from (possibly several) GMACS and TCSAM model runs.
 #'@param lstGMACS - gmacs_reslst or gmacs_replst object, or NULL
 #'@param lstTCSAM - tcsam02.resLst object, or NULL
 #'@return dataframe 
