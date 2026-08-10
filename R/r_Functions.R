@@ -248,7 +248,7 @@ extractMeanGrowth<-function(lstGMACS,lstTCSAM02=NULL){
   } else if (inherits(lstGMACS,"gmacs_rep1")) {
     rep = lstGMACS;
     #--get gmacs mean post-molt size by premolt size----
-    dfr = rep$`Mean growth` |> 
+    dfr = rep$`mean_growth` |> 
             dplyr::select(x=sex,z=premolt_size,val=mean_postmolt_size) |>
                   dplyr::mutate(case=paste("gmacs"),
                                 z=as.numeric(z),
